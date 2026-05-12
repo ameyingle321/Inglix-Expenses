@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabaseClient';
 
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 /**
  * A wrapper around native fetch that automatically attaches the Supabase JWT token.
@@ -12,7 +12,7 @@ const API_BASE_URL = 'http://localhost:3001/api';
 export async function fetchWithAuth(endpoint, options = {}) {
   // 1. Get the current session
   const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-  
+
   if (sessionError || !session) {
     throw new Error('You must be logged in to perform this action.');
   }
